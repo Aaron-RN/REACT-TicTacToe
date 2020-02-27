@@ -14,24 +14,56 @@ class Square extends React.Component {
 }
 
 class Board extends React.Component {
+  renderSquare(i) {
+    return <Square value={this.props.squares[i]}
+              onClick={() => this.props.onClick(i)}
+            />;
+  }
+
+  render() {
+    return (
+      <div>
+        <div className="board-row">
+          {this.renderSquare(0)}
+          {this.renderSquare(1)}
+          {this.renderSquare(2)}
+        </div>
+        <div className="board-row">
+          {this.renderSquare(3)}
+          {this.renderSquare(4)}
+          {this.renderSquare(5)}
+        </div>
+        <div className="board-row">
+          {this.renderSquare(6)}
+          {this.renderSquare(7)}
+          {this.renderSquare(8)}
+        </div>
+      </div>
+    );
+  }
+}
+
+class Game extends React.Component {
     constructor(props){
     super(props);
     this.state = {
+      history: [{squares: Array(9).fill(null)}],
       squares: Array(9).fill(null),
       player: 'X',
       winner : null,
       gameOver: false,
     };
   }
-  handleClick(i){
-    if (this.state.gameOver) { return; }
-    const squares = this.state.squares.slice(); //Used to create duplicate array
-    squares[i] = this.state.player;
-    this.setState({
-      squares: squares,
-    }, () => {
-      this.isGameOver();
-    });
+  
+    handleClick(i){
+      if (this.state.gameOver) { return; }
+      const squares = this.state.squares.slice(); //Used to create duplicate array
+      squares[i] = this.state.player;
+      this.setState({
+        squares: squares,
+      }, () => {
+        this.isGameOver();
+      });
   }
   
   isGameOver(){
@@ -69,49 +101,20 @@ class Board extends React.Component {
     }
   }
   
-  renderSquare(i) {
-    return <Square value={this.state.squares[i]}
-              onClick={() => this.handleClick(i)}
-            />;
-  }
-
   render() {
-    const {gameOver, player, winner} = this.state;
+    const {gameOver, player, winner, squares} = this.state;
     const status = !gameOver? 'Next player: ' + player : winner? 
                       winner + ' has Won!' : 'Draw!';
-
-    return (
-      <div>
-        <div className="status">{status}</div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
-      </div>
-    );
-  }
-}
-
-class Game extends React.Component {
-  render() {
     return (
       <div className="game">
         <div className="game-board">
-          <Board />
+          <Board 
+            squares={squares}
+            onClick={(i) => this.handleClick(i)}
+          />
         </div>
         <div className="game-info">
-          <div>{/* status */}</div>
+          <div>{status}</div>
           <ol>{/* TODO */}</ol>
         </div>
       </div>
