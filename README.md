@@ -10,6 +10,7 @@ Live Githack Link: https://raw.githack.com/Aaron-RN/REACT-TicTacToe/development/
 
 - HTML, CSS
 - JavaScript
+- Node.js
 - React
 
 ## Authors
