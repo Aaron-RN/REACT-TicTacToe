@@ -18,14 +18,16 @@ class Board extends React.Component {
     super(props);
     this.state = {
       squares: Array(9).fill(null),
+      player: 'X'
     };
   }
     
   handleClick(i){
     const squares = this.state.squares.slice(); //Used to create duplicate array
-    squares[i] = 'X'
+    squares[i] = this.state.player;
     this.setState({
-      squares: squares
+      squares: squares,
+      player: this.state.player === 'X'? 'O' : 'X',
     });
   }
   
@@ -36,7 +38,7 @@ class Board extends React.Component {
   }
 
   render() {
-    const status = 'Next player: X';
+    const status = 'Next player: ' + this.state.player;
 
     return (
       <div>
