@@ -18,17 +18,43 @@ class Board extends React.Component {
     super(props);
     this.state = {
       squares: Array(9).fill(null),
-      player: 'X'
+      player: 'X',
+      gameOver: false,
     };
   }
-    
   handleClick(i){
+    if (this.state.gameOver) { return; }
     const squares = this.state.squares.slice(); //Used to create duplicate array
     squares[i] = this.state.player;
     this.setState({
       squares: squares,
       player: this.state.player === 'X'? 'O' : 'X',
+    }, () => {
+      this.isGameOver();
     });
+  }
+  
+  isGameOver(){
+    console.log(this.state.squares);
+    const winningCombo = [
+      [0,1,2],
+      [3,4,5],
+      [6,7,8],
+      [0,3,6],
+      [1,4,7],
+      [2,5,8],
+      [0,4,8],
+      [2,4,6],
+    ];
+    for (let i = 0; i < winningCombo.length; i += 1){
+      const [a, b, c] = winningCombo[i];
+      const squares = this.state.squares;
+      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]){
+        this.setState({
+          gameOver: true,
+        });
+      }
+    }
   }
   
   renderSquare(i) {
@@ -38,7 +64,9 @@ class Board extends React.Component {
   }
 
   render() {
-    const status = 'Next player: ' + this.state.player;
+    const {gameOver, player} = this.state;
+    const winner = player == 'X'? 'O' : 'X'; // Retrieves the previous player before current turn
+    const status = !gameOver? 'Next player: ' + player : winner + ' has Won!';
 
     return (
       <div>
