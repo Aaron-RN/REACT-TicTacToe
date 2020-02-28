@@ -7,5 +7,5 @@ import Game from './models/game';
 
 ReactDOM.render(
   <Game />,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
