@@ -74,7 +74,6 @@ class Game extends React.Component {
   
   jumpTo(move){
     const history = this.state.history.slice(0, move+1);
-    console.log(history);
     
     this.setState({
       history: history,
