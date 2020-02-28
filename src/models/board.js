@@ -1,19 +1,22 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Square from './square';
 
 class Board extends React.Component {
   renderSquare(i) {
+    const { squares, onClick } = this.props;
     return (
       <Square
-        value={this.props.squares[i]}
-        onClick={() => this.props.onClick(i)}
+        value={squares[i]}
+        onClick={() => onClick(i)}
       />
     );
   }
 
   render() {
+    const { animate } = this.props;
     return (
-      <div className={`whole-board${this.props.animate}`}>
+      <div className={`whole-board${animate}`}>
         <div className="board-row">
           {this.renderSquare(0)}
           {this.renderSquare(1)}
@@ -33,5 +36,18 @@ class Board extends React.Component {
     );
   }
 }
+
+// Specifies the default values for props:
+Board.defaultProps = {
+  squares: null,
+  animate: null,
+  onClick: null,
+};
+
+Board.propTypes = {
+  squares: PropTypes.arrayOf(PropTypes.string),
+  animate: PropTypes.string,
+  onClick: PropTypes.func,
+};
 
 export default Board;
