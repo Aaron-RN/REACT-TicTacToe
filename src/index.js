@@ -24,8 +24,9 @@ class Board extends React.Component {
     };
   }
   handleClick(i){
-    if (this.state.gameOver) { return; }
     const squares = this.state.squares.slice(); //Used to create duplicate array
+    if (this.state.gameOver || squares[i] ) { return; }
+        
     squares[i] = this.state.player;
     this.setState({
       squares: squares,
