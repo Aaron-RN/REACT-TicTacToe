@@ -50,8 +50,12 @@ class Game extends React.Component {
     const {player, history, stepNumber, animate} = this.state;
     const current = history[stepNumber];
     const gameState = isGameOver(current.squares);
+    let span;
     let status = gameState === 'Draw' && !false? 'Draw' : `Player ${gameState} has Won!`;
-    if (gameState === false) {status = 'Player Turn: ' + player;}
+    if (gameState === false) {
+      span = <span className="pulse">{player}</span>;
+      status = 'Player Turn: ';
+    }
     
     const classAddHide = animate? ' hide': ''
     const classAddAnimate = animate? ' jumpTo': ''
@@ -67,7 +71,7 @@ class Game extends React.Component {
     
     return (
       <div className="game">
-        <h1>{status}</h1>
+        <h1>{status}{span}</h1>
         <div className="game-board">
           <Board
             animate={classAddAnimate}

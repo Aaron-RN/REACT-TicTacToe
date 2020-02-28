@@ -109,6 +109,13 @@ h1{text-align: center; color: #2E3309;}
   animation-duration: 800ms;
   animation-timing-function: ease;
 }
+.pulse{
+  display: inline-block;
+  animation-name: pulsate;
+  animation-duration: 2s;
+  animation-timing-function: ease;
+  animation-iteration-count: infinite;
+}
 
 @keyframes slideRight {
   0% {transform: translateX(0px);}
@@ -122,5 +129,11 @@ h1{text-align: center; color: #2E3309;}
 @keyframes growBounce{
   0% { transform: scale(0); border: 0;}
   50% { transform: scale(1.5); border: 0;}
+  100% { transform: scale(1);}
+}
+
+@keyframes pulsate{
+  0% { transform: scale(1);}
+  50% { transform: scale(1.5);}
   100% { transform: scale(1);}
 }
