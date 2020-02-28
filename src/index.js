@@ -78,6 +78,7 @@ class Game extends React.Component {
     this.setState({
       history: history,
       stepNumber: history.length-1,
+      player: history.length % 2 == 0? 'O' : 'X',
     });
   }
   
