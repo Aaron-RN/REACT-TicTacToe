@@ -44,72 +44,49 @@ class Board extends React.Component {
 }
 
 class Game extends React.Component {
-    constructor(props){
+  constructor(props){
     super(props);
     this.state = {
-      history: [{squares: Array(9).fill(null)}],
-      squares: Array(9).fill(null),
+      history: [
+        {squares: Array(9).fill(null)}
+      ],
+      stepNumber: 0,
       player: 'X',
-      winner : null,
-      gameOver: false,
     };
   }
   
-    handleClick(i){
-      if (this.state.gameOver) { return; }
-      const squares = this.state.squares.slice(); //Used to create duplicate array
-      squares[i] = this.state.player;
-      this.setState({
-        squares: squares,
-      }, () => {
-        this.isGameOver();
-      });
+  handleClick(i){
+    const history = this.state.history.slice(0, this.state.stepNumber + 1);//Used to create duplicate array
+    const current = history[history.length - 1];
+    const squares = current.squares.slice();//Used to create duplicate array
+    if (isGameOver(squares) || squares[i]) {
+      return;
+    }
+    squares[i] = this.state.player;
+    this.setState({
+      history: history.concat([
+        {
+          squares: squares
+        }
+      ]),
+      stepNumber: history.length,
+      player: this.state.player === 'X'? 'O' : 'X',
+    });
   }
   
-  isGameOver(){
-    const winningCombo = [
-      [0,1,2],
-      [3,4,5],
-      [6,7,8],
-      [0,3,6],
-      [1,4,7],
-      [2,5,8],
-      [0,4,8],
-      [2,4,6],
-    ];
-    for (let i = 0; i < winningCombo.length; i += 1){
-      const [a, b, c] = winningCombo[i];
-      const squares = this.state.squares;
-      //Check for Winner
-      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]){
-        this.setState({
-          gameOver: true,
-          winner: this.state.player,
-        });
-      } else {//Switch Player Turn
-        this.setState({
-          player: this.state.player === 'X'? 'O' : 'X',
-        });
-      }
-    }
-    //Check if the board is full
-    const isDraw = this.state.squares.every((i) => i != null);
-    if (isDraw){
-      this.setState({
-        gameOver: true,
-      });
-    }
-  }
   
   render() {
-    const {gameOver, player, winner, squares} = this.state;
-    const status = !gameOver? 'Next player: ' + player : winner? 
-                      winner + ' has Won!' : 'Draw!';
+    const {player, history} = this.state;
+    const current = history[this.state.stepNumber];
+    const gameState = isGameOver(current.squares);
+    let status = gameState === 'Draw' && !false? 'Draw' : gameState + ' has Won!';
+    if (gameState === false) {status = 'Next player: ' + player;}
+    
     return (
       <div className="game">
         <div className="game-board">
           <Board 
-            squares={squares}
+            squares={current.squares}
             onClick={(i) => this.handleClick(i)}
           />
         </div>
@@ -128,3 +105,30 @@ ReactDOM.render(
   <Game />,
   document.getElementById('root')
 );
+
+function isGameOver(squares){
+  const winningCombo = [
+    [0,1,2],
+    [3,4,5],
+    [6,7,8],
+    [0,3,6],
+    [1,4,7],
+    [2,5,8],
+    [0,4,8],
+    [2,4,6],
+  ];
+  for (let i = 0; i < winningCombo.length; i += 1){
+    const [a, b, c] = winningCombo[i];
+    //Check for Winner
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]){
+      return squares[a];
+    }
+  }
+  //Check if the board is full
+  const isDraw = squares.every((i) => i != null);
+  if (isDraw){
+    return 'Draw';
+  }
+  
+  return false;
+}
