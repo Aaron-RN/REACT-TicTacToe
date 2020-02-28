@@ -10,8 +10,10 @@ class Game extends React.Component {
       ],
       stepNumber: 0,
       player: 'X',
+      animate: false,
     };
   }
+
   
   handleClick(i){
     //Used to create a duplicate history array but only duplicate the squares objects in line with the state.stepNumber
@@ -31,48 +33,55 @@ class Game extends React.Component {
   }
   
   jumpTo(move){
-    const history = this.state.history.slice(0, move+1);
+    setTimeout(() => {
+      this.setState({animate: false});
+    }, 1800);
     
+    const history = this.state.history.slice(0, move+1);
     this.setState({
+      animate: true,
       history: history,
       stepNumber: history.length-1,
-      player: history.length % 2 == 0? 'O' : 'X',
+      player: history.length % 2 === 0? 'O' : 'X',
     });
   }
   
   render() {
-    const {player, history, stepNumber} = this.state;
+    const {player, history, stepNumber, animate} = this.state;
     const current = history[stepNumber];
     const gameState = isGameOver(current.squares);
-    let status = gameState === 'Draw' && !false? 'Draw' : gameState + ' has Won!';
-    if (gameState === false) {status = 'Next player: ' + player;}
+    let status = gameState === 'Draw' && !false? 'Draw' : `Player ${gameState} has Won!`;
+    if (gameState === false) {status = 'Player Turn: ' + player;}
     
+    const classAddHide = animate? ' hide': ''
+    const classAddAnimate = animate? ' jumpTo': ''
     const moves = history.map((step, move) => {
       const desc = !move ? 'Go to game start' : 'Go to move #' + move;
+      const playerTurn = move % 2 !== 0? 'O-border' : 'X-border';
       return (
-        <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+        <li key={move} className="move">
+          <button className={playerTurn} onClick={() => this.jumpTo(move)}>{desc}</button>
         </li>
       );
     });
     
     return (
       <div className="game">
+        <h1>{status}</h1>
         <div className="game-board">
-          <Board 
+          <Board
+            animate={classAddAnimate}
             squares={current.squares}
             onClick={(i) => this.handleClick(i)}
           />
         </div>
-        <div className="game-info">
-          <div>{status}</div>
+        <div className={"game-info" + classAddHide}>
           <ol>{moves}</ol>
         </div>
       </div>
     );
   }
 }
-
 
 function isGameOver(squares){
   const winningCombo = [

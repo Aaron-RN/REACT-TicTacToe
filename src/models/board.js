@@ -10,7 +10,7 @@ class Board extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className={"whole-board" + this.props.animate}>
         <div className="board-row">
           {this.renderSquare(0)}
           {this.renderSquare(1)}

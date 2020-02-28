@@ -4,7 +4,7 @@ Simple straight forward rendition of the commonly known game Tic Tac Toe, built 
 ![screenshot](./screenshot.png)
 
 ## Live Link
-Live Githack Link: https://raw.githack.com/Aaron-RN/REACT-TicTacToe/development/index.html
+Live Githack Link: https://raw.githack.com/Aaron-RN/REACT-TicTacToe/development/public/index.html
 
 ## Built With
 
