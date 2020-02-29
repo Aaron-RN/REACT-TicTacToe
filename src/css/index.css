@@ -1,0 +1,139 @@
+* {box-sizing: border-box; transition-duration: 500ms;}
+
+/*
+*:hover{
+  outline: 1px solid blue;
+}
+*/
+
+body {
+  font: 16px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
+  overflow-x: hidden;
+}
+
+ol, ul {
+  padding-left: 30px;
+}
+
+h1{text-align: center; color: #2E3309;}
+
+.whole-board{
+  background-color: #F7FBDF;
+  border: 6px solid #CBE432;
+  border-radius: 8px;
+}
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.X {color: #b30059;}
+
+.O {color: #0066cc;}
+
+.status {
+  margin-bottom: 10px;
+}
+
+.square {
+  cursor: pointer;
+  overflow: hidden;
+  background: none;
+  border: 2px solid #E3F08E;
+  float: left;
+  font-size: 36px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 96px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 96px;
+}
+.square:hover{
+  transform: scale(1.05);
+}
+.square:focus {
+  outline: none;
+}
+
+.kbd-navigation .square:focus {
+  background: #ddd;
+}
+
+.X-border{border: 2px solid #b30059;}
+.O-border{border: 2px solid #0066cc;}
+
+.move *{
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 4px;
+  padding: 4px;
+  margin: 2px;
+  background-color: #FFF;
+}
+.move *:hover{
+  transform: scale(1.15);
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  width: calc(99px * 3);
+  margin: auto;
+}
+
+.game-info {
+  align-self: center;
+  text-align: center;
+  overflow-x: visible;
+  overflow-y: scroll;
+  min-width: 250px;
+  max-height: 300px;
+}
+
+.hide {display: none; }
+
+/* Animations Below*/
+.jumpTo{
+  animation-name: slideRight, slideFromLeft;
+  animation-delay: 0s, 0.8s;
+  animation-duration: 800ms, 1000ms;
+  animation-timing-function: ease;
+}
+.growB{
+  animation-name: growBounce;
+  animation-duration: 800ms;
+  animation-timing-function: ease;
+}
+.pulse{
+  display: inline-block;
+  animation-name: pulsate;
+  animation-duration: 2s;
+  animation-timing-function: ease;
+  animation-iteration-count: infinite;
+}
+
+@keyframes slideRight {
+  0% {transform: translateX(0px);}
+  100% {transform: translate(100vw);}
+}
+@keyframes slideFromLeft {
+  0% {transform: translateX(-100vw);}
+  100% {transform: translate(0px);}
+}
+
+@keyframes growBounce{
+  0% { transform: scale(0); border: 0;}
+  50% { transform: scale(1.5); border: 0;}
+  100% { transform: scale(1);}
+}
+
+@keyframes pulsate{
+  0% { transform: scale(1);}
+  50% { transform: scale(1.5);}
+  100% { transform: scale(1);}
+}
