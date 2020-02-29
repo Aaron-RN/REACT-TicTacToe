@@ -3,7 +3,7 @@ Simple straight forward rendition of the commonly known game Tic Tac Toe, built 
 
 ![screenshot](./screenshot.png)
 
-## [Live Githack Link](https://react-tic-tac-toe-arn.herokuapp.com/)
+## [Live DEMO Link](https://react-tic-tac-toe-arn.herokuapp.com/)
 
 ## Built With
 
