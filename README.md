@@ -10,7 +10,7 @@ Simple straight forward rendition of the commonly known game Tic Tac Toe, built 
 - HTML, CSS
 - JavaScript
 - Node.js
-- React
+- React.js
 
 ## Authors
 
